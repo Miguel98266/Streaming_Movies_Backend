@@ -1,4 +1,27 @@
 type Query{
  ping: String
+ getMovies:[Movie]
 }
 
+type Movie{
+    _id:ID
+    title:String,
+    description:String,
+    image:String,
+    rates:[Rate],
+    Date:String
+}
+type Rate{
+    user:User,
+    description:String,
+    rate:Int
+}
+
+type User{
+    name:String,
+    lastName:String,
+    birthday:String,
+    email:String,
+    password:String
+   
+}
