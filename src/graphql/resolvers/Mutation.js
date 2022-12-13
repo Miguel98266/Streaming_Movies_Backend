@@ -41,7 +41,6 @@ const Mutation={
                 model: 'User'
             }
         })
-        console.log(movieUpdated)
         return movieUpdated
     },
 }

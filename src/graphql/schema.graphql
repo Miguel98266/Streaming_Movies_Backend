@@ -2,7 +2,7 @@ type Query{
  ping: String
  getMovies:[Movie]
  getMovieById(_id:ID):Movie
- getRateByMovie(_id:ID):[RateSpecial]
+ getRateByMovie(_id:ID):[Rate]
  login(email:String,password:String):Login
  getRateAvgByMovie(_id:ID):Float
 }
@@ -20,7 +20,7 @@ type Movie{
     description:String,
     image:String,
     dateRelease:String,
-    rate:[RateSpecial]
+    rate:[Rate]
 }
 input MovieInput{
     title:String,
@@ -28,22 +28,19 @@ input MovieInput{
     image:String,
     dateRelease:String
 }
+
 type Rate{
-    _id:ID,
-    user:ID,
-    description:String,
-    rate:Int
-}
-type RateSpecial{
     _id:ID,
     user:User,
     description:String,
-    rate:Int
+    rate:Int,
+    date:String
 }
 input RateInput{
     user:ID!,
     description:String,
-    rate:Int!
+    rate:Int!,
+    date:String
 }
 
 type User{
