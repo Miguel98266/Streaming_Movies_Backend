@@ -11,7 +11,14 @@ const Query = {
     return "pong";
   },
   async getMovies() {
-    const movies = await Movie.find();
+    const movies = await Movie.find().populate({ 
+      path: 'rate',
+      model: 'Rate',
+      populate: {
+          path: 'user',
+          model: 'User'
+      }
+  })
     return movies;
   },
   async getMovieById(_, { _id }) {
@@ -20,7 +27,7 @@ const Query = {
   },
   async getRateByMovie(_, { _id }) {
     console.log(_id)
-    const rate = await Rate.find({"movie":mongo.ObjectId(_id)}).populate('user movie')
+    const rate = await Rate.find({"movie":mongo.ObjectId(_id)}).populate('user')
     return rate;
   },
   async getRateAvgByMovie(_, { _id }) {

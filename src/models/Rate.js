@@ -7,10 +7,7 @@ const rateSchema = new mongoose.Schema({
   },
   description: String,
   rate: Number,
-  movie: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Movie",
-  },
+  date:Date
 });
 
 export default mongoose.model("Rate", rateSchema);

@@ -28,9 +28,21 @@ const Mutation={
         const user = await User.findByIdAndUpdate(_id, input, { new: true });
         return user;
     },
-    async createRate(_,{input}){
+    async createRate(_,{input,_id}){
         const rate = await Rate.create(input);
-        return rate;
+        console.log(rate._id)
+        const movie=await Movie.findById(_id)
+        movie.rate=movie.rate.concat(rate._id)
+        const movieUpdated=await Movie.findByIdAndUpdate(_id,movie, { new: true }).populate({ 
+            path: 'rate',
+            model: 'Rate',
+            populate: {
+                path: 'user',
+                model: 'User'
+            }
+        })
+        console.log(movieUpdated)
+        return movieUpdated
     },
 }
 
