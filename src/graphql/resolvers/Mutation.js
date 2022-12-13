@@ -1,5 +1,6 @@
 import Movie from "../../models/Movie";
 import User from '../../models/User';
+import Rate from "../../models/Rate";
 import bcrypt from "bcrypt";
 import jwt from "jwt-simple";
 import config from '../../config'
@@ -26,6 +27,10 @@ const Mutation={
     async updateUser(_,{ input, _id }){
         const user = await User.findByIdAndUpdate(_id, input, { new: true });
         return user;
+    },
+    async createRate(_,{input}){
+        const rate = await Rate.create(input);
+        return rate;
     },
 }
 

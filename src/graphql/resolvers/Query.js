@@ -4,6 +4,7 @@ import User from "../../models/User";
 import bcrypt from "bcrypt";
 import jwt from "jwt-simple";
 import config from '../../config'
+import { mongo } from "mongoose";
 
 const Query = {
   ping() {
@@ -18,8 +19,18 @@ const Query = {
     return movie;
   },
   async getRateByMovie(_, { _id }) {
-    const rate = await Rate.find({"movie":_id}).populate("movies");
+    console.log(_id)
+    const rate = await Rate.find({"movie":mongo.ObjectId(_id)}).populate('user movie')
     return rate;
+  },
+  async getRateAvgByMovie(_, { _id }) {
+    console.log(_id)
+    const average =  await Rate.aggregate([
+      { $match: { movie: mongo.ObjectId(_id) } },
+      { $group: { _id: null, average: { $avg: '$rate' } } },
+    ]);
+    
+    return average[0].average;
   },
   async login(_, { email,password}) {
     if (!email || !password) {
