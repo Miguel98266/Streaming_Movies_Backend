@@ -1,5 +1,6 @@
 import Movie from "../../models/Movie";
 import User from '../../models/User';
+import Rate from "../../models/Rate";
 import bcrypt from "bcrypt";
 import jwt from "jwt-simple";
 import config from '../../config'
@@ -26,6 +27,21 @@ const Mutation={
     async updateUser(_,{ input, _id }){
         const user = await User.findByIdAndUpdate(_id, input, { new: true });
         return user;
+    },
+    async createRate(_,{input,_id}){
+        const rate = await Rate.create(input);
+        console.log(rate._id)
+        const movie=await Movie.findById(_id)
+        movie.rate=movie.rate.concat(rate._id)
+        const movieUpdated=await Movie.findByIdAndUpdate(_id,movie, { new: true }).populate({ 
+            path: 'rate',
+            model: 'Rate',
+            populate: {
+                path: 'user',
+                model: 'User'
+            }
+        })
+        return movieUpdated
     },
 }
 

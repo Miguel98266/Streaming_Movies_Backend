@@ -2,8 +2,9 @@ type Query{
  ping: String
  getMovies:[Movie]
  getMovieById(_id:ID):Movie
- getRateByMovie(_id:ID):Rate
+ getRateByMovie(_id:ID):[Rate]
  login(email:String,password:String):Login
+ getRateAvgByMovie(_id:ID):Float
 }
 type Mutation{
     createMovie(input:MovieInput):Movie
@@ -11,13 +12,15 @@ type Mutation{
     removeMovie(_id:ID):[Movie]
     createUser(input:UserInput):User
     updateUser(input:UserInputUpdate, _id:ID):User
+    createRate(input:RateInput, _id:ID):Movie
 }
 type Movie{
     _id:ID
     title:String,
     description:String,
     image:String,
-    dateRelease:String
+    dateRelease:String,
+    rate:[Rate]
 }
 input MovieInput{
     title:String,
@@ -30,8 +33,14 @@ type Rate{
     _id:ID,
     user:User,
     description:String,
-    rate:Int
-    Movie:Movie
+    rate:Int,
+    date:String
+}
+input RateInput{
+    user:ID!,
+    description:String,
+    rate:Int!,
+    date:String
 }
 
 type User{

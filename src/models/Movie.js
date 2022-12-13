@@ -10,7 +10,10 @@ const movieSchema= new mongoose.Schema({
     description:String,
     image:String,
     dateRelease:Date,
-    
+    rate: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Rate",
+      }],
 })
 
 export default mongoose.model("Movie",movieSchema)
