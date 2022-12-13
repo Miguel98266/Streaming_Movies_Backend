@@ -12,5 +12,5 @@ export const server = new GraphQLServer({
 });
 const port = config.server.port;
 server.start({ port }, ({ port }) => {
-  console.log("Server running!!");
+  console.log("Server running!!✅");
 });

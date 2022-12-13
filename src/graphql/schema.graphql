@@ -2,11 +2,15 @@ type Query{
  ping: String
  getMovies:[Movie]
  getMovieById(_id:ID):Movie
+ getRateByMovie(_id:ID):Rate
+ login(email:String,password:String):Login
 }
 type Mutation{
     createMovie(input:MovieInput):Movie
     updateMovie(input:MovieInput, _id:ID):Movie
     removeMovie(_id:ID):[Movie]
+    createUser(input:UserInput):User
+    updateUser(input:UserInputUpdate, _id:ID):User
 }
 type Movie{
     _id:ID
@@ -23,15 +27,35 @@ input MovieInput{
 }
 
 type Rate{
+    _id:ID,
     user:User,
     description:String,
     rate:Int
+    Movie:Movie
 }
 
 type User{
+    _id:ID,
     name:String,
     lastName:String,
     birthday:String,
     email:String,
-    password:String
+}
+input UserInput{
+    name:String!,
+    lastName:String,
+    birthday:String,
+    email:String!,
+    password:String!
+}
+input UserInputUpdate{
+    name:String!,
+    lastName:String,
+    birthday:String,
+    email:String!,
+}
+type Login{
+    isValid:Boolean,
+    msg:String,
+    token:String
 }
