@@ -22,7 +22,14 @@ const Query = {
     return movies;
   },
   async getMovieById(_, { _id }) {
-    const movie = await Movie.findById(_id);
+    const movie = await Movie.findById(_id).populate({ 
+      path: 'rate',
+      model: 'Rate',
+      populate: {
+          path: 'user',
+          model: 'User'
+      }
+  })
     return movie;
   },
   async getRateByMovie(_, { _id }) {
